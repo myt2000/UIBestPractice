@@ -9,10 +9,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-//    private lateinit var appBarConfiguration: AppBarConfiguration
-//    private lateinit var binding: ActivityMainBinding
     private val msgList = ArrayList<Msg>()
-    private var adapter: MsgAdapter ?= null
+    private lateinit var adapter: MsgAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -20,7 +18,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initMsg()
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
-        adapter = MsgAdapter(msgList)
+        if (!::adapter.isInitialized){
+            adapter = MsgAdapter(msgList)
+        }
+
         recyclerView.adapter = adapter
         send.setOnClickListener(this)
         }
@@ -32,7 +33,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (content.isNotEmpty()){
                     val msg = Msg(content, Msg.TYPE_SENT)
                     msgList.add(msg)
-                    adapter?.notifyItemInserted(msgList.size -1) // 当有新消息时，刷新RecyclerView中的显示
+//                    adapter?.notifyDataSetChanged()   //
+                    adapter.notifyItemInserted(msgList.size -1) // 当有新消息时，刷新RecyclerView中的显示
                     recyclerView.scrollToPosition(msgList.size -1) // 将RecyclerView定位到最后一行
                     inputText.setText("") // 清空输入框中的内容
                 }
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         msgList.add(msg3)
     }
 
-    }
+}
 
 
 
