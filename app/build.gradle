@@ -2,7 +2,9 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'kotlin-parcelize'
 android {
     compileSdk 32
 
@@ -31,6 +33,7 @@ android {
     }
     buildFeatures {
         viewBinding true
+        prefab true
     }
 }
 
