@@ -20,7 +20,7 @@ class MsgAdapter(val msgList: List<Msg>): RecyclerView.Adapter<RecyclerView.View
         val msg = msgList[position]
         return msg.type
     }
-
+    // 这里=可以直接实现return的功能，等于retrun LeftViewHolder(view) 或者 RightViewHolder(view)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) :RecyclerView.ViewHolder =
         if (viewType == Msg.TYPE_RECEIVED) {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.msg_left_item, parent, false)
